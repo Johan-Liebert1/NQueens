@@ -1,11 +1,8 @@
-from printBoard import print_board
+from printBoard import print_board, write_to_js_file
 
-board_length = 4
+all_solutions = []
 
-main_board = [[0] * board_length for _ in range(board_length)]
-
-
-def attack_minor_diagonal(bo, rand_row, rand_col, remove = False):
+def attack_minor_diagonal(bo, rand_row, rand_col, solving = True):
     # Attacked minor diagonal
     # We go down and left, rows are increasing, cols are decreasing
     i = rand_row
@@ -28,6 +25,7 @@ def attack_minor_diagonal(bo, rand_row, rand_col, remove = False):
 
         i -= 1
         j += 1
+
     return True
 
 
@@ -78,16 +76,23 @@ def isSafe(board, row, col):
     return True
 
 
-def solve_n_queens(boa, row):
+def solve_n_queens(boa, start_col, row):
     if row == board_length:
+        if boa not in all_solutions:
+            all_solutions.append(boa)
         return True
 
-    for column in range(board_length):
+    start_column = start_col if row == 0 else 0
+
+    for column in range(start_column, board_length):
 
         if isSafe(boa, row, column):
             boa[row][column] = 'Q'
 
-            if solve_n_queens(boa, row + 1):
+            if solve_n_queens(boa, start_col, row + 1):
+                if boa not in all_solutions:
+
+                    all_solutions.append(boa)
                 return True
             
 
@@ -95,9 +100,17 @@ def solve_n_queens(boa, row):
 
     return False
 
-           
+
 
 if __name__ == "__main__":
-    solve_n_queens(main_board, 0)
+    board_length = int(input("Enter board dimension > "))
 
-    print_board(main_board)
+    for i in range(board_length):
+        main_board = [[0] * board_length for _ in range(board_length)]
+
+        solve_n_queens(main_board, i, 0)
+
+    for b in all_solutions:
+        print_board(b, board_length) 
+
+    write_to_js_file(all_solutions, board_length)
