@@ -1,9 +1,13 @@
 const canvas = document.getElementById('canvas')
+const queenImage = document.getElementById("queenImage")
+const nextSol = document.getElementById('nextSol')
+const prevSol = document.getElementById('prevSol')
+const boardNumber = document.getElementById('board-number')
 const ctx = canvas.getContext('2d')
 const white = 'rgb(200, 200, 200)'
 const board_dimension = Queens[0].length
-const cell_size = 80
-const queenImage = document.getElementById("queenImage")
+const cell_size = 70
+var count = -1
 
 canvas.width = board_dimension * cell_size
 canvas.height = board_dimension * cell_size
@@ -62,5 +66,25 @@ const placeQueens = (board) => {
     }
 }
 
-display_board()
-placeQueens(Queens[0])
+
+const nextBoard = (pn) => {
+    
+    if (pn == 'add')
+        count += 1
+
+    else 
+        count -= 1
+
+    if ( count < Queens.length && count >= 0 ) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        display_board()
+        placeQueens(Queens[count])
+        boardNumber.innerText = `${count + 1} / ${Queens.length}`
+    }
+
+}
+
+nextSol.addEventListener('click', () => nextBoard('add'))
+prevSol.addEventListener('click', () => nextBoard('sub'))
+
+nextBoard('add')

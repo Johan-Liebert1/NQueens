@@ -7,25 +7,73 @@
     <style>
         body {
             width: 100vw;
+            color: white;
             background-color: rgb(100, 100, 100);
         }
 
         #canvas {
             background-color: rgb(40, 40, 40);
-            margin: 50px 200px;
         }
 
         img {
             display: none;
         }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            color: white;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        #prevSol {
+            background-color: #2ecc71;
+            margin-right: 30px;
+        }
+
+        #nextSol {
+            background: #3498db;
+            margin-left: 30px;
+        }
+
+        #board-number {
+            position: fixed;
+            top: 1%;
+            left: 49%;
+            font-size: 20px;
+        }
+
     </style>
 </head>
 <body>
     <img src="scripts/queen.png" id="queenImage"/>
-    <canvas id='canvas'>
+    <p id = 'board-number'></p>
 
-    </canvas>
+    <div class="container">
+        <button id = "prevSol" class="button">Previous Solution</button>
+
+        <canvas id='canvas'></canvas>
+
+        <button id = "nextSol" class="button">Next Solution</button>
+    </div>
+    
     <script src="scripts/nQueens.js"></script>
     <script src="scripts/view.js"></script>
 </body>
